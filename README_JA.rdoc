@@ -1,0 +1,94 @@
+
+= Google Search
+早く、裕福なグーグル検索です。
+Web検索結果、画像、本、地図、ブログや、ニュースを
+たったひとつの因果関係とスムーズなRuby APIで使うことができます。
+
+
+== 依存関係
+
+* json gem
+
+== 特徴
+* 早い
+* 惰性な列挙 (一度にすべてのGoogleからの結果を取得しない)
+* 人気なグーグルの機能 ブログ、本、画像、地図、ニュース、パテント？、動画やWeb
+* ソースコードはとてもキレイで、上手。
+* テスト範囲はすべてある。
+
+== クラス
+
+  - Google::Search                  | すべての検索クラスのスーパークラス. 列挙できる。
+  - Google::Search::Web             | Web検索.
+  - Google::Search::Blog            | ブログ検索.
+  - Google::Search::Book            | 本検索.
+  - Google::Search::Image           | 画像検索.
+  - Google::Search::Local           | 地図検索.
+  - Google::Search::News            | ニュース検索.
+  - Google::Search::Patent          | パテント?検索.
+  - Google::Search::Video           | 動画検索.
+  - Google::Search::Response        | 単独のリクエスト、レスポンスをするアイテムを含む。列挙できる。
+　- Google::Search::Item            | 単独アイテム、すべてのアイテムのスーパークラス。
+  - Google::Search::Item::Web       | 単独アイテム。Web固有のデータを含みます。
+  - Google::Search::Item::Blog      | 単独アイテム。ブログ固有のデータを含みます。
+  - Google::Search::Item::Book      | 単独アイテム。本固有のデータを含みます。
+  - Google::Search::Item::Image     | 単独アイテム。画像固有のデータを含みます。
+  - Google::Search::Item::Local     | 単独アイテム。地図固有のデータを含みます。
+  - Google::Search::Item::News      | 単独アイテム。ニュース固有のデータを含みます。
+  - Google::Search::Item::Patent    | 単独アイテム。パテント固有のデータを含みます。
+  - Google::Search::Item::Video     | 単独アイテム。動画固有のデータを含みます。
+
+== 任意のクエリ文字のサポートについて
+
+任意キー / Google::Search.newへ２つの値を渡します。
+すべてのオプションは、クエリの文字列として割り当てられてはいません。
+
+引数の参照については、 訪問先: http://code.google.com/apis/ajaxsearch/documentation/reference.html#_fonje_web
+  
+== アイテム
+それぞれのアイテムの種類、（Web,画像、それ以外）はGoogle::Search::Itemのサブクラスです。
+その定数は、Google::Search::Item::{Web, Image, Blog, etc}です。
+あらゆる側面でgoogle-searchは、上手く文書化されていますので、
+spec/item_spec.rbの属性を見て、学べます。
+
+== 画像例
+新しく画像検索をするためには、クエリの文字列を渡してください。
+クエリの文字列は、URLエンコードをSearch#get_uriで呼び出すので、
+手動で行う必要はありません。
+
+  File.open('path/to/images.html', 'w+') do |file|
+    Google::Search::Image.new(:query => 'Cookies').each do |image|
+      file.write %(<img src="#{image.uri}">)
+    end
+  end
+  
+== その他のお知らせについて
+
+* ソースをよくみてください。 :) 
+
+== ライセンスについて:
+
+(The MIT License)
+
+Copyright (c) 2009 TJ Holowaychuk <tj@vision-media.ca>
+権限は、hereby grantedさんのものです。
+無償です,取得をするすべての人へ、このソフトウェアを
+制限をなしに、このソフトウェアに対処するなど。。。
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, an d/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
